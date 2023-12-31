@@ -1,6 +1,6 @@
 # WebShop
 
-Requiert packages
+Required packages
 
 ```
 python -m pip install Django
