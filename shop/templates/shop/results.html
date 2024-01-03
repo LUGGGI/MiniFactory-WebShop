@@ -1,0 +1,9 @@
+<h1>{{ product.name }}</h1>
+
+<ul>
+{% for option in product.option_set.all %}
+    <li>{{ option.option_text }} -- {{ option.selections }} select{{ option.selections|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'shop:option' product.id %}">select again?</a>
