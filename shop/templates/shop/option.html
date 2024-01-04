@@ -1,12 +1,35 @@
-<form action="{% url 'shop:select' product.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend><h1>{{ product.name }}</h1></legend>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        {% for option in product.option_set.all %}
-            <input type="radio" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
-            <label for="option{{ forloop.counter }}">{{ option.option_text }}</label><br>
-        {% endfor %}
-    </fieldset>
-    <input type="submit" value="Vote">
-</form>
+<!doctype html>
+
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>Option selection</title>
+    </head>
+    <header>
+        <h1>MiniFactory WebShop</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'shop:index' %}">Home</a>
+            </li>
+        </ul>
+    </nav>
+    <hr />
+    <body>
+        <form action="{% url 'shop:select' product.id %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend><h1>Option selection for {{ product.name }}</h1></legend>
+
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+                {% for option in product.option_set.all %}
+                    <input type="radio" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
+                    <label for="option{{ forloop.counter }}">{{ option.option_text }}</label><br>
+                {% endfor %}
+            </fieldset>
+            <input type="submit" value="Vote">
+        </form>
+    </body>
+</html>

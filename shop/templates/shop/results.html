@@ -1,9 +1,31 @@
-<h1>{{ product.name }}</h1>
+<!doctype html>
 
-<ul>
-{% for option in product.option_set.all %}
-    <li>{{ option.option_text }} -- {{ option.selections }} select{{ option.selections|pluralize }}</li>
-{% endfor %}
-</ul>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>Shopping Cart</title>
+    </head>
 
-<a href="{% url 'shop:option' product.id %}">select again?</a>
+    <header>
+        <h1>MiniFactory WebShop</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'shop:index' %}">Home</a>
+            </li>
+        </ul>
+    </nav>
+    <hr />
+    <body>
+        <h1>{{ product.name }}</h1>
+        
+        <ul>
+        {% for option in product.option_set.all %}
+            <li>{{ option.option_text }} -- {{ option.selections }} select{{ option.selections|pluralize }}</li>
+        {% endfor %}
+        </ul>
+        
+        <a href="{% url 'shop:option' product.id %}">select again?</a>
+    </body>
+</html>

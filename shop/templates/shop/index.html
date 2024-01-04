@@ -1,9 +1,33 @@
-{% if product_list %}
-    <ul>
-    {% for product in product_list %}
-        <li><a href="{% url 'shop:option' product.id %}">{{ product.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+<!doctype html>
+
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>Product selection</title>
+    </head>
+
+    <header>
+        <h1>MiniFactory WebShop</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'shop:index' %}">Home</a>
+            </li>
+        </ul>
+    </nav>
+    <hr />
+    <body>
+        <h1>Product selection</h1>
+
+        {% if product_list %}
+            <ul>
+            {% for product in product_list %}
+                <li><a href="{% url 'shop:option' product.id %}">{{ product.name }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+    </body>
+</html>
