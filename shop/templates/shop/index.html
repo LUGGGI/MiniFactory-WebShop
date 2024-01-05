@@ -1,37 +1,26 @@
-{% load static %}
+{% extends 'shop/base.html' %}
 
 <!doctype html>
 
 <html lang="en-US">
     <head>
         <meta charset="utf-8" />
-        <title>Product selection</title>
-
-        <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+        <title>{% block title %}Product selection {% endblock %}</title>
     </head>
 
-    <header>
-        <h1>MiniFactory WebShop</h1>
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="{% url 'shop:index' %}">Home</a>
-            </li>
-        </ul>
-    </nav>
-    <hr />
     <body>
-        <h1>Product selection</h1>
+        {% block page_content %}
+            <h1>Product selection</h1>
 
-        {% if product_list %}
-            <ul>
-            {% for product in product_list %}
-                <li><a href="{% url 'shop:option' product.id %}">{{ product.name }}</a></li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No polls are available.</p>
-        {% endif %}
+            {% if product_list %}
+                <ul>
+                {% for product in product_list %}
+                    <li><a href="{% url 'shop:option' product.id %}">{{ product.name }}</a></li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        {% endblock %}
     </body>
 </html>

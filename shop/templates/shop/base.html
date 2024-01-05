@@ -1,0 +1,28 @@
+{% load static %}
+
+<!doctype html>
+
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>MiniFactory - {% block title %}{% endblock %}</title>
+        
+        <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    </head>
+    <header>
+        <h1>MiniFactory WebShop</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'shop:index' %}">Home</a>
+            </li>
+        </ul>
+    </nav>
+    <hr />
+
+    <body>
+        {% block page_content %}
+        {% endblock %}
+    </body>
+</html>

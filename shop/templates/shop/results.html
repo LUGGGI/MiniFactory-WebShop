@@ -1,31 +1,23 @@
+{% extends 'shop/base.html' %}
+
 <!doctype html>
 
 <html lang="en-US">
     <head>
         <meta charset="utf-8" />
-        <title>Shopping Cart</title>
+        <title>{% block title %}Shopping Cart {% endblock %}</title>
     </head>
-
-    <header>
-        <h1>MiniFactory WebShop</h1>
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="{% url 'shop:index' %}">Home</a>
-            </li>
-        </ul>
-    </nav>
-    <hr />
     <body>
-        <h1>{{ product.name }}</h1>
-        
-        <ul>
-        {% for option in product.option_set.all %}
-            <li>{{ option.option_text }} -- {{ option.selections }} select{{ option.selections|pluralize }}</li>
-        {% endfor %}
-        </ul>
-        
-        <a href="{% url 'shop:option' product.id %}">select again?</a>
+        {% block page_content %}
+            <h1>{{ product.name }}</h1>
+            
+            <ul>
+            {% for option in product.option_set.all %}
+                <li>{{ option.option_text }} -- {{ option.selections }} select{{ option.selections|pluralize }}</li>
+            {% endfor %}
+            </ul>
+            
+            <a href="{% url 'shop:option' product.id %}">select again?</a>
+        {% endblock %}
     </body>
 </html>
