@@ -1,7 +1,30 @@
-header h1 {
-    color: orange;
+body {
+    font-family: "Raleway", Helvetica, sans-serif;
 }
 
+/* Navigation bar */
+.container {
+    color: orange;
+    display:flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+#logo{
+    border:3px solid;
+    padding:0 10px;
+}
+#navbar li{
+    display:inline-block;
+}
+#navbar a{
+    color: orange;
+    text-decoration:none;
+    font-size:18px;
+    padding-right:50px;
+}
+
+
+/* Option selection */
 form {
     /* Center the form on the page */
     margin: 0 auto;
@@ -11,20 +34,12 @@ form {
     border: 3px solid #ccc;
     border-radius: 1em;
 }
-
-/* ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-} */
-
 form legend {
     /* Uniform size & alignment */
     display: inline-block;
     width: 100%;
     text-align: center;
 }
-
 form li {
     width: 100%;
     
@@ -33,13 +48,10 @@ form li {
     align-items: center;
     justify-content: space-around;
     position: relative;
-  }
-
-
+}
 .error_message {
     color: red;
 }
-
 label {
     /* To make sure that all text fields have the same font settings
         By default, textareas have a monospace font */
@@ -48,13 +60,10 @@ label {
     position: absolute;
 
 }
-
-
 /*
     remove the default styling of the checkbox using appearance
     and create the outer toggle area
 */
-
 input[type="checkbox"] {
     -webkit-appearance: none;
     appearance: none;
@@ -65,12 +74,10 @@ input[type="checkbox"] {
     background: #eee;
     transition: all 0.4s;
 }
-
 /*
     style the ::before content to look like
     the inner toggle switch - the bit that moves
 */
-
 input[type="checkbox"]::before {
     width: 16px;
     height: 16px;
@@ -82,30 +89,24 @@ input[type="checkbox"]::before {
     left: 8px;
     transition: all 0.4s;
 }
-
 /*
     change the outer background color and move the inner toggle switch
     when the checkbox is checked; use transitions for smooth animation
 */
-
 input[type="checkbox"]:checked {
     background-color: #ffaa00;
     transition: all 0.4s;
 }
-
 input[type="checkbox"]:checked::before {
     left: 28px;
     transition: all 0.4s;
 }
-
 input:focus {
     outline: 1px dotted black;
 }
-
 label:hover {
     color: orange;
 }
-
 form .button {
     /* Center the button on the page */
     color: orange;

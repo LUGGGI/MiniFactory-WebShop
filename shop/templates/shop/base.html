@@ -9,17 +9,19 @@
         
         <link rel="stylesheet" href="{% static 'shop/style.css' %}">
     </head>
-    <header>
-        <h1>MiniFactory WebShop</h1>
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="{% url 'shop:index' %}">Home</a>
-            </li>
-        </ul>
-    </nav>
-    <hr />
+    
+    <div class=container>
+        <h1 id="logo">MiniFactory WebShop </h1>
+        <nav id="navbar">
+            <ul>
+                <li>
+                    <a href="{% url 'shop:index' %}">Home</a>
+                    <a href="{% url 'admin:index' %}">Admin</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
 
     <body>
         {% block page_content %}
