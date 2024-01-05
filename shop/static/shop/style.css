@@ -1,0 +1,117 @@
+header h1 {
+    color: orange;
+}
+
+form {
+    /* Center the form on the page */
+    margin: 0 auto;
+    width: 50%;
+    /* Form outline */
+    padding: 1em;
+    border: 3px solid #ccc;
+    border-radius: 1em;
+}
+
+/* ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+} */
+
+form legend {
+    /* Uniform size & alignment */
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+form li {
+    width: 100%;
+    
+    /* margin-bottom: 1em; */
+    display: inline-table;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+  }
+
+
+.error_message {
+    color: red;
+}
+
+label {
+    /* To make sure that all text fields have the same font settings
+        By default, textareas have a monospace font */
+    font: 1.5em sans-serif;
+    padding-left: 0.5em;
+    position: absolute;
+
+}
+
+
+/*
+    remove the default styling of the checkbox using appearance
+    and create the outer toggle area
+*/
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    border: 2px solid black;
+    background: #eee;
+    transition: all 0.4s;
+}
+
+/*
+    style the ::before content to look like
+    the inner toggle switch - the bit that moves
+*/
+
+input[type="checkbox"]::before {
+    width: 16px;
+    height: 16px;
+    border-radius: 9px;
+    background-color: black;
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 8px;
+    transition: all 0.4s;
+}
+
+/*
+    change the outer background color and move the inner toggle switch
+    when the checkbox is checked; use transitions for smooth animation
+*/
+
+input[type="checkbox"]:checked {
+    background-color: #ffaa00;
+    transition: all 0.4s;
+}
+
+input[type="checkbox"]:checked::before {
+    left: 28px;
+    transition: all 0.4s;
+}
+
+input:focus {
+    outline: 1px dotted black;
+}
+
+label:hover {
+    color: orange;
+}
+
+form .button {
+    /* Center the button on the page */
+    color: orange;
+    border-color: orange;
+    width: 50%;
+
+    font: 1.5em sans-serif;
+    list-style: none;
+}

@@ -1,9 +1,13 @@
+{% load static %}
+
 <!doctype html>
 
 <html lang="en-US">
     <head>
         <meta charset="utf-8" />
         <title>Option selection</title>
+        
+        <link rel="stylesheet" href="{% static 'shop/style.css' %}">
     </head>
     <header>
         <h1>MiniFactory WebShop</h1>
@@ -20,16 +24,23 @@
         <form action="{% url 'shop:select' product.id %}" method="post">
             {% csrf_token %}
             <fieldset>
-                <legend><h1>Option selection for {{ product.name }}</h1></legend>
+                <legend><h1>{{ product.name }} option</h1></legend>
 
-                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
 
                 {% for option in product.option_set.all %}
-                    <input type="radio" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
-                    <label for="option{{ forloop.counter }}">{{ option.option_text }}</label><br>
+                <ul>
+                    <li>
+                        <input type="checkbox" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
+                        <label for="option{{ forloop.counter }}">{{ option.option_text }}</label><br>
+                    </li>
+                </ul>
                 {% endfor %}
             </fieldset>
-            <input type="submit" value="Vote">
+            <div style="text-align: center">
+                <button class="button" type="submit">Add to cart</button>
+            </div>
+            
         </form>
     </body>
 </html>
