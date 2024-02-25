@@ -1,3 +1,4 @@
+from typing import Any
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import render, get_object_or_404
@@ -11,87 +12,63 @@ from .models import Product, Option, Order
 
 
 class IndexView(generic.ListView):
-    model = Product
     template_name = "shop/index.html"
-
-    # def get_queryset(self):
-    #     return Product.objects.order_by("name")
-    
-class OptionView(generic.ListView):
-    model = Option
-    template_name = "shop/option.html"
-
-    # def get_queryset(self):
-    #     """
-    #     Excludes any products that aren't published yet.
-    #     """
-    #     return Product.objects.order_by("name")
-    
-
-class ResultsView(generic.DetailView):
+    context_object_name = "product_list"
     model = Product
-    template_name = "shop/results.html"
 
-    # def get_queryset(self):
-    #     """
-    #     Excludes any products that aren't published yet.
-    #     """
-    #     return Order.objects.order_by("order_date")
+    # add the options to the site
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context =  super(IndexView, self).get_context_data(**kwargs)
+        context["option_list"] = Option.objects.order_by('name_int')
+        return context
     
 
-def select_options(request):
+class CartView(generic.DetailView):
+    model = Order
+    template_name = "shop/cart.html"
+
+
+class ReceiptView(generic.DetailView):
+    model = Order
+    template_name = "shop/receipt.html"
+
+
+def select(request):
+    '''Gets the data from the selection html form'''
+
     try:
-        # order_number = Order.objects.latest("order_date").number + 1
+        selected_product = Product.objects.get(id=request.POST["product"])
 
         selected_options = []
-
         for option_id in request.POST.getlist("option"):
-            selected_options.append({Option.objects.get(pk=option_id): True})
-        
-    except Exception as e:
-        # Redisplay the product select form.
-        return render(
-            request,
-            "shop/option.html",
-            {
-                "option": Option,
-                "error_message": f"Error: {e}",
-            },
-        )
-    else:
-        print(selected_options)
-        
-        # order = Order(number=order_number, order_date=timezone.now())
-        # order.save()
-        # order.products.add(product)
-        # order.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse("shop:results", args=(1,)))
-    
+            selected_options.append(Option.objects.get(pk=option_id))
 
-def select_product(request):
-    # product = get_object_or_404(Product, pk=product_id)
-    try:
-        pk = request.POST["product"]
-        selected_product = Product.objects.get(id=pk)
-        # selected_product = product.choice_set.get(pk=request.POST["product"])
     except (KeyError, Product.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(
-            request,
-            "shop.html",
-            {
-                "product": Product,
-                "error_message": "You didn't select a product.",
-            },
-        )
+        # Redisplay the selection form.
+        return HttpResponseRedirect(reverse("shop:index"))
+    
     else:
-        print(pk, selected_product)
-        # selected_choice.votes += 1
-        # selected_choice.save()
-        # # Always return an HttpResponseRedirect after successfully dealing
-        # # with POST data. This prevents data from being posted twice if a
-        # # user hits the Back button.
-        return HttpResponseRedirect(reverse("shop:results", args=(pk,)))
+        print(selected_product)
+        print(selected_options)
+
+        order = Order(order_date=timezone.now())
+        order.save()
+        order.product.add(selected_product)
+        for option in selected_options:
+            order.options.add(option)
+        order.save()
+
+        return HttpResponseRedirect(reverse("shop:cart", args=(order.id,)))
+
+
+def order(request, order_id):
+    '''Gets the data from the order form'''
+
+    # check if cancel button was pressed an delete order from database
+    if request.POST["button"] == "cancel":
+        Order.objects.get(id=order_id).delete()
+        return HttpResponseRedirect(reverse("shop:index"))
+    
+    # TODO: send order per mqtt
+
+    return HttpResponseRedirect(reverse("shop:receipt", args=(order_id,)))

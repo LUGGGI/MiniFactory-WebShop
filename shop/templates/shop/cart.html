@@ -1,0 +1,32 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Shopping Cart {% endblock %}
+
+{% block page_content %}
+    <form action="{% url 'shop:order' order.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1> Shopping Cart for Order {{order.id}} </h1></legend>
+
+            {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
+
+            <ul>
+                <li> Product: {% for order in order.product.all %} {{order}} {% endfor %} </li>
+                <li> Options: 
+                    <ul>
+                        {% for option in order.options.all %}
+                        <li> {{ option }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li> Order time: {{order.order_date}}</li>
+            </ul>
+        </fieldset>
+
+        <input type="submit" name="button" value="cancel">
+        <input type="submit" name="button" value="order">
+
+    </form>
+    
+{% endblock %}
+

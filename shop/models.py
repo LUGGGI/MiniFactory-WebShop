@@ -24,5 +24,4 @@ class Order(models.Model):
     product = models.ManyToManyField(Product)
     options = models.ManyToManyField(Option)
 
-    number = models.PositiveIntegerField(default=0)
     order_date = models.DateTimeField("date ordered")

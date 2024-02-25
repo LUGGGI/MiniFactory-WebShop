@@ -1,0 +1,24 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Receipt {% endblock %}
+
+{% block page_content %}
+
+    <fieldset>
+        <h1> Receipt for Order {{order.id}} </h1>
+
+        <ul>
+            <li> Product: {% for order in order.product.all %} {{order}} {% endfor %} </li>
+            <li> Options: 
+                <ul>
+                    {% for option in order.options.all %}
+                    <li> {{ option }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li> Order time: {{order.order_date}}</li>
+        </ul>
+    </fieldset>
+
+    
+{% endblock %}

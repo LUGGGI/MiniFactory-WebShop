@@ -3,18 +3,31 @@
 {% block title %}Order {% endblock %}
 
 {% block page_content %}
-    <form action="{% url 'shop:select_product' %}" method="post">
+    <form action="{% url 'shop:select' %}" method="post">
         {% csrf_token %}
         <fieldset>
             <legend><h1>Products</h1></legend>
-
+            
             {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
-
+            Select one product:
             {% for product in product_list %}
             <ul>
                 <li>
                     <input type="radio" name="product" id="product{{ forloop.counter }}" value="{{ product.id }}">
                     <label for="product{{ forloop.counter }}">{{ product.name }}</label><br>
+                </li>
+            </ul>
+            {% endfor %}
+        </fieldset>
+
+        <fieldset>
+            <legend><h1>Options</h1></legend>
+            Activate addons:
+            {% for option in option_list %}
+            <ul>
+                <li>
+                    <input type="checkbox" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
+                    <label for="option{{ forloop.counter }}">{{ option.display_text }}</label><br>
                 </li>
             </ul>
             {% endfor %}
