@@ -1,17 +1,28 @@
 {% extends 'shop/base.html' %}
 
-{% block title %}Product selection {% endblock %}
+{% block title %}Order {% endblock %}
 
 {% block page_content %}
-    <h1>Product selection</h1>
+    <form action="{% url 'shop:select_product' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>Products</h1></legend>
 
-    {% if product_list %}
-        <ul>
-        {% for product in product_list %}
-            <li><a href="{% url 'shop:option' product.id %}">{{ product.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No polls are available.</p>
-    {% endif %}
+            {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
+
+            {% for product in product_list %}
+            <ul>
+                <li>
+                    <input type="radio" name="product" id="product{{ forloop.counter }}" value="{{ product.id }}">
+                    <label for="product{{ forloop.counter }}">{{ product.name }}</label><br>
+                </li>
+            </ul>
+            {% endfor %}
+        </fieldset>
+
+        <div style="text-align: center">
+            <button class="button" type="submit">Add to cart</button>
+        </div>
+        
+    </form>
 {% endblock %}
