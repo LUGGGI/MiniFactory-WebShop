@@ -1,36 +1,28 @@
 {% extends 'shop/base.html' %}
 
-<!doctype html>
+{% block title %}Option selection {% endblock %}
 
-<html lang="en-US">
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block title %}Option selection {% endblock %}</title>
-    </head>
+{% block page_content %}
+    <form action="{% url 'shop:select' product.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{ product.name }} options</h1></legend>
 
-    <body>
-        {% block page_content %}
-            <form action="{% url 'shop:select' product.id %}" method="post">
-                {% csrf_token %}
-                <fieldset>
-                    <legend><h1>{{ product.name }} option</h1></legend>
+            {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
 
-                    {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
+            {% for option in product.options.all %}
+            <ul>
+                <li>
+                    <input type="checkbox" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
+                    <label for="option{{ forloop.counter }}">{{ option.display_text }}</label><br>
+                </li>
+            </ul>
+            {% endfor %}
+        </fieldset>
 
-                    {% for option in product.option_set.all %}
-                    <ul>
-                        <li>
-                            <input type="checkbox" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
-                            <label for="option{{ forloop.counter }}">{{ option.option_text }}</label><br>
-                        </li>
-                    </ul>
-                    {% endfor %}
-                </fieldset>
-                <div style="text-align: center">
-                    <button class="button" type="submit">Add to cart</button>
-                </div>
-                
-        </form>
-        {% endblock %}
-    </body>
-</html>
+        <div style="text-align: center">
+            <button class="button" type="submit">Add to cart</button>
+        </div>
+        
+    </form>
+{% endblock %}

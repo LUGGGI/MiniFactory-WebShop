@@ -1,26 +1,17 @@
 {% extends 'shop/base.html' %}
 
-<!doctype html>
+{% block title %}Product selection {% endblock %}
 
-<html lang="en-US">
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block title %}Product selection {% endblock %}</title>
-    </head>
+{% block page_content %}
+    <h1>Product selection</h1>
 
-    <body>
-        {% block page_content %}
-            <h1>Product selection</h1>
-
-            {% if product_list %}
-                <ul>
-                {% for product in product_list %}
-                    <li><a href="{% url 'shop:option' product.id %}">{{ product.name }}</a></li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <p>No polls are available.</p>
-            {% endif %}
-        {% endblock %}
-    </body>
-</html>
+    {% if product_list %}
+        <ul>
+        {% for product in product_list %}
+            <li><a href="{% url 'shop:option' product.id %}">{{ product.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+{% endblock %}

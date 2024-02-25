@@ -1,23 +1,26 @@
 {% extends 'shop/base.html' %}
 
-<!doctype html>
+{% block title %}Shopping Cart {% endblock %}
 
-<html lang="en-US">
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block title %}Shopping Cart {% endblock %}</title>
-    </head>
-    <body>
-        {% block page_content %}
-            <h1>{{ product.name }}</h1>
-            
+{% block page_content %}
+    <h1>Order number: {{ order.number }}</h1>
+    
+    <ul>
+    {% for product in order.products.all %}
+        <fieldset>
+            <h2>Product: {{product.name}}</h2>
+
+            {% for option in product.options.all%}
             <ul>
-            {% for option in product.option_set.all %}
-                <li>{{ option.option_text }} -- {{ option.selections }} select{{ option.selections|pluralize }}</li>
-            {% endfor %}
+                <li>
+                    {{option.display_text}}: {{option.selected}}<br>
+                </li>
             </ul>
-            
-            <a href="{% url 'shop:option' product.id %}">change options</a>
-        {% endblock %}
-    </body>
-</html>
+            {% endfor %}
+        </fieldset>
+        <a href="{% url 'shop:option' product.id %}">change options</a>
+    {% endfor %}
+    </ul>
+    
+{% endblock %}
+
