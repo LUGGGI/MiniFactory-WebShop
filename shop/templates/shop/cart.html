@@ -1,5 +1,10 @@
 {% extends 'shop/base.html' %}
 
+{% load static %}
+{% block head_link %}
+    <link rel="stylesheet" href="{% static 'shop/order_list.css' %}">
+{% endblock %}
+
 {% block title %}Shopping Cart {% endblock %}
 
 {% block page_content %}
@@ -9,22 +14,38 @@
             <legend><h1> Shopping Cart for Order {{order.id}} </h1></legend>
 
             {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
-
-            <ul>
-                <li> Product: {% for order in order.product.all %} {{order}} {% endfor %} </li>
-                <li> Options: 
+            
+            <div class="order">
+                <div>
+                    <img src="{{ order.product.get.image.url }}"  alt="{{ order.product.get.name }}"> 
+                </div>
+                <div>
+                    <br>
+                    Product:  {{order.product.get.name}}
+                    <br><br>
+                    Options: 
                     <ul>
                         {% for option in order.options.all %}
-                        <li> {{ option }}</li>
+                            <li> {{ option }}</li>
                         {% endfor %}
                     </ul>
-                </li>
-                <li> Order time: {{order.order_date}}</li>
-            </ul>
+                </div>
+                <div class="order_date">
+                    Added to cart at:
+                    <br>
+                    {{ order.order_date }}
+                </div>
+            </div>
         </fieldset>
 
-        <input type="submit" name="button" value="cancel">
-        <input type="submit" name="button" value="order">
+        <div class="order buttons">
+            <div>
+                <input class="button" type="submit" name="button" value="cancel">
+            </div>
+            <div>
+                <input class="button" type="submit" name="button" value="order">
+            </div>
+        </div>
 
     </form>
     

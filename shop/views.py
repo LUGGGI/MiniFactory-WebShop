@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import render, get_object_or_404
@@ -7,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .models import Product, Option, Order
-
+from .mqtt import mqtt_handler
 
 
 
@@ -31,6 +32,9 @@ class CartView(generic.DetailView):
 class ReceiptView(generic.ListView):
     model = Order
     template_name = "shop/receipt.html"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Order.objects.order_by("-order_date")
 
 
 def select(request):
@@ -70,7 +74,33 @@ def order(request, order_id):
         return HttpResponseRedirect(reverse("shop:index"))
     
 
-    Order.objects.get(id=order_id).order_date = timezone.now()
+    order = Order.objects.get(id=order_id)
+    order.order_date = timezone.now()
+    order.save()
     # TODO: send order per mqtt
 
+    order_data = {
+        "name": order_id,
+        "color": order.product.get().product_color,
+    }
+    for option in order.options.all():
+        order_data.update({option.name_int: True})
+
+    mqtt_handler.send_data(order_data)
+    print(order_data)
     return HttpResponseRedirect(reverse("shop:receipt", args=(order_id,)))
+
+
+def reorder(request):
+    '''Adds selected order back to cart'''
+    
+    old_order = Order.objects.get(id=request.POST["button"])
+    # create new order with the same content
+    order = Order(order_date=timezone.now())
+    order.save()
+    order.product.add(old_order.product.get())
+    for option in old_order.options.all():
+        order.options.add(option)
+    order.save()
+
+    return HttpResponseRedirect(reverse("shop:cart", args=(order.id,)))

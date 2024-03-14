@@ -1,28 +1,51 @@
 {% extends 'shop/base.html' %}
 
+{% load static %}
+{% block head_link %}
+    <link rel="stylesheet" href="{% static 'shop/order_list.css' %}">
+{% endblock %}
+
 {% block title %}Receipt {% endblock %}
 
 {% block page_content %}
 
-    <fieldset>
+    <form action="{% url 'shop:reorder' %}" method="post">
+        {% csrf_token %}
         <h1> Receipt for Order {{order.id}} </h1>
-
+        
         {% for order in order_list %}
         <fieldset>
-            Product:  {{order.product.get.name}}
-            <ul>
-                <li> Options: 
+            <div class="order">
+                <div>
+                    <img src="{{ order.product.get.image.url }}"  alt="{{ order.product.get.name }}"> 
+                </div>
+                <div>
+                    <br>
+                    Product:  {{order.product.get.name}}
+                    <br><br>
+                    Options: 
                     <ul>
                         {% for option in order.options.all %}
-                        <li> {{ option }}</li>
+                            <li> {{ option }}</li>
                         {% endfor %}
                     </ul>
-                </li>
-                <li> Order time: {{order.order_date}}</li>
-            </ul>
+                </div>
+                <div class="order_date">
+                    <div>
+                        Order date:
+                        <br>
+                        {{ order.order_date }}
+                    </div>
+
+                    <div class"reorder">
+                        <button class="button" type="submit" name="button" value="{{ order.id }}">Reorder</button>
+                    </div>
+                </div>
+            </div>
+            
         </fieldset>
         {% endfor %}
-    </fieldset>
+    </form>
 
     
 {% endblock %}

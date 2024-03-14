@@ -9,4 +9,5 @@ urlpatterns = [
     path("<int:pk>/cart/", views.CartView.as_view(), name="cart"),
     path("<int:order_id>/order/", views.order, name="order"),
     path("<int:pk>/receipt/", views.ReceiptView.as_view(), name="receipt"),
+    path("reorder/", views.reorder, name="reorder"),
 ]

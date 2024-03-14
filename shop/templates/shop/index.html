@@ -1,5 +1,10 @@
 {% extends 'shop/base.html' %}
 
+{% load static %}
+{% block head_link %}
+    <link rel="stylesheet" href="{% static 'shop/product_sel.css' %}">
+{% endblock %}
+
 {% block title %}Order {% endblock %}
 
 {% block page_content %}
