@@ -7,17 +7,21 @@
     <fieldset>
         <h1> Receipt for Order {{order.id}} </h1>
 
-        <ul>
-            <li> Product: {% for order in order.product.all %} {{order}} {% endfor %} </li>
-            <li> Options: 
-                <ul>
-                    {% for option in order.options.all %}
-                    <li> {{ option }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-            <li> Order time: {{order.order_date}}</li>
-        </ul>
+        {% for order in order_list %}
+        <fieldset>
+            Product:  {{order.product.get.name}}
+            <ul>
+                <li> Options: 
+                    <ul>
+                        {% for option in order.options.all %}
+                        <li> {{ option }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li> Order time: {{order.order_date}}</li>
+            </ul>
+        </fieldset>
+        {% endfor %}
     </fieldset>
 
     

@@ -15,6 +15,7 @@ class Option(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=50)
     product_color = models.CharField(max_length=5, choices=(("WHITE", "White"), ("RED", "Red"), ("BLUE", "Blue")))
+    image = models.ImageField(upload_to="images/shop")
 
     def __str__(self) -> str:
         return self.name

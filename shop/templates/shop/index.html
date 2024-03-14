@@ -10,11 +10,16 @@
             
             {% if error_message %}<p class="error_message"><strong>{{ error_message }}</strong></p>{% endif %}
             Select one product:
+            <br>
             {% for product in product_list %}
-            <ul>
+            <ul id="product_sel">
                 <li>
                     <input type="radio" name="product" id="product{{ forloop.counter }}" value="{{ product.id }}">
-                    <label for="product{{ forloop.counter }}">{{ product.name }}</label><br>
+                    <label for="product{{ forloop.counter }}">
+                        <img src="{{ product.image.url }}"  alt="{{ product.name }}"> 
+                            {{ product.name }} 
+                        </img>
+                    </label>
                 </li>
             </ul>
             {% endfor %}
@@ -23,14 +28,14 @@
         <fieldset>
             <legend><h1>Options</h1></legend>
             Activate addons:
-            {% for option in option_list %}
             <ul>
+                {% for option in option_list %}
                 <li>
                     <input type="checkbox" name="option" id="option{{ forloop.counter }}" value="{{ option.id }}">
                     <label for="option{{ forloop.counter }}">{{ option.display_text }}</label><br>
                 </li>
+                {% endfor %}
             </ul>
-            {% endfor %}
         </fieldset>
 
         <div style="text-align: center">

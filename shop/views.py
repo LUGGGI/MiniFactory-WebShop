@@ -28,7 +28,7 @@ class CartView(generic.DetailView):
     template_name = "shop/cart.html"
 
 
-class ReceiptView(generic.DetailView):
+class ReceiptView(generic.ListView):
     model = Order
     template_name = "shop/receipt.html"
 
@@ -69,6 +69,8 @@ def order(request, order_id):
         Order.objects.get(id=order_id).delete()
         return HttpResponseRedirect(reverse("shop:index"))
     
+
+    Order.objects.get(id=order_id).order_date = timezone.now()
     # TODO: send order per mqtt
 
     return HttpResponseRedirect(reverse("shop:receipt", args=(order_id,)))
