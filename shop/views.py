@@ -80,7 +80,7 @@ def order(request, order_id):
     # TODO: send order per mqtt
 
     order_data = {
-        "name": order_id,
+        "name": f"nr{order_id}",
         "color": order.product.get().product_color,
     }
     for option in order.options.all():

@@ -20,7 +20,7 @@ class MqttPublish():
     def __init__(self) -> None:
         '''Init MqttInterface.'''
 
-        self.__BROKER_ADDR = "test.mosquitto.org"
+        # self.__BROKER_ADDR = "test.mosquitto.org"
 
         self.topic = "MiniFactory/Webshop/Data"
 
