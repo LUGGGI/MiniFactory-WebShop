@@ -26,7 +26,6 @@ class MqttPublish():
 
         self.client = mqtt.Client()
 
-        self.client.connect(self.__BROKER_ADDR, self.__PORT)
 
     def send_data(self, data: dict):
         '''Send data to given topic
@@ -34,6 +33,7 @@ class MqttPublish():
         Args:
             data(dict): The data to send, if None the default data for the given topic will be sent.
         '''
+        self.client.connect(self.__BROKER_ADDR, self.__PORT)
         self.client.publish(self.topic, json.dumps(data))
         print(f"Mqtt send: {json.dumps(data)}")
 
