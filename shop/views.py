@@ -87,7 +87,6 @@ def order(request, order_id):
         order_data.update({option.name_int: True})
 
     mqtt_handler.send_data(order_data)
-    print(order_data)
     return HttpResponseRedirect(reverse("shop:receipt", args=(order_id,)))
 
 

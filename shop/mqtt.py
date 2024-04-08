@@ -35,6 +35,7 @@ class MqttPublish():
             data(dict): The data to send, if None the default data for the given topic will be sent.
         '''
         self.client.publish(self.topic, json.dumps(data))
+        print(f"Mqtt send: {json.dumps(data)}")
 
 
 mqtt_handler = MqttPublish()
